@@ -1,0 +1,40 @@
+version: "3"
+
+# containers
+services:
+
+  # neo4j-server
+  neo4j-server:
+    image: neo4j:latest
+    container_name: neo4j-server
+    environment:
+      - NEO4J_AUTH=neo4j/admin
+    ports:
+      - 7474:7474
+      - 7687:7687
+
+  # discovery-server
+  discovery-server:
+    build: ./discovery-server/
+    container_name: discovery-server
+    image: ${PREFIX}/discovery-server:${VERSION}
+    ports:
+      - "8761:8761"
+
+  # producer-service
+  producer-service:
+    build: ./producer-service/
+    container_name: producer-service
+    image: ${PREFIX}/producer-service:${VERSION}
+    depends_on:
+      - neo4j-server
+    expose:
+      - "8100"
+
+  # consumer-service
+  consumer-service:
+    build: ./consumer-service/
+    container_name: consumer-service
+    image: ${PREFIX}/consumer-service:${VERSION}
+    ports:
+      - 8200:8200
