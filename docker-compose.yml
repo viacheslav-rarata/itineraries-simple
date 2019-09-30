@@ -8,10 +8,10 @@ services:
     image: neo4j:latest
     container_name: neo4j-server
     environment:
-      - NEO4J_AUTH=neo4j/admin
+      - NEO4J_AUTH=${NEO4J_LOGIN}/${NEO4J_PASSWORD}
     ports:
-      - 7474:7474
-      - 7687:7687
+      - "7474:7474"
+      - "7687:7687"
 
   # discovery-server
   discovery-server:
@@ -28,6 +28,11 @@ services:
     image: ${PREFIX}/producer-service:${VERSION}
     depends_on:
       - neo4j-server
+    environment:
+      - DISCOVERY_URL=discovery-server
+      - NEO4J_URL=neo4j-server
+      - NEO4J_LOGIN=${NEO4J_LOGIN}
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD}
     expose:
       - "8100"
 
@@ -36,5 +41,8 @@ services:
     build: ./consumer-service/
     container_name: consumer-service
     image: ${PREFIX}/consumer-service:${VERSION}
+    environment:
+      - DISCOVERY_URL=discovery-server
+      - PRODUCER_URL=producer-service
     ports:
-      - 8200:8200
+      - "8200:8200"

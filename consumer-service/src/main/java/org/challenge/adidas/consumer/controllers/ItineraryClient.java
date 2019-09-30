@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Feign Client for requesting service producer
  */
-@FeignClient(name = "producer-service", url = "http://localhost:8100/data")
+@FeignClient(name = "producer-service", url = "http://${PRODUCER_URL:localhost}:8100/data")
 public interface ItineraryClient {
 
     @GetMapping("/itineraries/less-connections")

@@ -28,6 +28,6 @@ public class ItineraryConsumerService {
 
     @HystrixCommand(fallbackMethod = "fallback")
     public Collection<Itinerary> lessTime(String originCity) {
-        return itineraryClient.lessConnections(originCity);
+        return itineraryClient.lessTime(originCity);
     }
 }

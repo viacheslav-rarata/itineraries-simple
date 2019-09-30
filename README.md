@@ -21,7 +21,7 @@
 For build project run:
 ```sh
 $ mvn clean package
-$ docker build -t itineraries-simple/discovery-erver:1.0 ./discovery-server
+$ docker build -t itineraries-simple/discovery-server:1.0 ./discovery-server
 $ docker build -t itineraries-simple/consumer-service:1.0 ./consumer-service
 $ docker build -t itineraries-simple/producer-service:1.0 ./producer-service
 ```
